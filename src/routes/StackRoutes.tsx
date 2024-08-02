@@ -1,18 +1,27 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack"
 import Welcome from "../screens/welcome/index.tsx";
-import { NavigationContainer } from "@react-navigation/native";
+import Home from "../screens/home/index.tsx";
+import TabRoutes, { TabTypes } from "./TabRoutes.tsx";
+
 
 
 const stack = createNativeStackNavigator()
 
+type StackNavigation = {
+    welcome: undefined;
+    tabroutes: undefined;
+}
+
+export type StackTypes = NativeStackNavigationProp<StackNavigation>;
+
 const StackNavigator = () => {
     return(
-        <NavigationContainer>
-            <stack.Navigator initialRouteName="welcome">
+            <stack.Navigator initialRouteName="welcome" screenOptions={{
+                headerShown: false
+            }}>
                 <stack.Screen name="welcome" component={Welcome}/>
-
+                <stack.Screen name="tabroutes" component={TabRoutes}/>
             </stack.Navigator>
-        </NavigationContainer>
         
     )
 }

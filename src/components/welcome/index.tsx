@@ -1,27 +1,35 @@
 import { BlurView } from "@react-native-community/blur";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StackTypes } from "../../routes/StackRoutes";
 
-const ExploreStarted = ({navigation}: any) => {
+const ExploreStarted = () => {
+
+  const navigation = useNavigation<StackTypes>()
+
     return ( 
-        <View style={styles.container}>
-        <BlurView
-            style={styles.blurContainer}
-            blurType="light"
-            blurAmount={20}
-            reducedTransparencyFallbackColor="rgba(0, 0, 0, 0.5)"
-        />
-        <Text style={styles.title}>Explore and Mint NFTs</Text>
-        <Text style={styles.subtitle}>You can buy and sell the NFTs of the best artists in the world.</Text>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("")}>
-            <BlurView
-                style={styles.blurButton}
-                blurType="light"
-                blurAmount={67}
-                reducedTransparencyFallbackColor="rgba(0, 0, 0, 0.389)"
-            />
-            <Text style={styles.buttonText}>Get started now</Text>
-        </TouchableOpacity>
-      </View>
+        <>
+          <StatusBar backgroundColor={"#6166A0"}/>
+          <View style={styles.container}>
+          <BlurView
+              style={styles.blurContainer}
+              blurType="light"
+              blurAmount={20}
+              reducedTransparencyFallbackColor="rgba(0, 0, 0, 0.5)"
+          />
+          <Text style={styles.title}>Explore and Mint NFTs</Text>
+          <Text style={styles.subtitle}>You can buy and sell the NFTs of the best artists in the world.</Text>
+          <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate("tabroutes") }}>
+              <BlurView
+                  style={styles.blurButton}
+                  blurType="light"
+                  blurAmount={67}
+                  reducedTransparencyFallbackColor="rgba(0, 0, 0, 0.389)"
+              />
+              <Text style={styles.buttonText}>Get started now</Text>
+          </TouchableOpacity>
+        </View>
+      </>
      );
 }
 
