@@ -13,6 +13,7 @@ const ImageMarketPlace = ({url, desc}: props) => {
         <ImageBackground source={url} style={styles.imageContainer}>
             <Text style={styles.desc}>
                 {desc}
+               
             </Text>
         </ImageBackground>
      );
@@ -29,12 +30,14 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end",
         alignItems: "center",
 
-        paddingBottom: 10
     },
     desc: {
         color: "#FFF",
         fontSize: 19,
-        fontWeight: "bold"
+        width: "100%",
+        textAlign: "center",
+        paddingVertical: 15,
+        fontWeight: "bold",
     }
 })
 
