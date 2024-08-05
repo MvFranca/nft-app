@@ -14,10 +14,10 @@ const Marketplace = () => {
                 style={styles.containerList}
                 horizontal
                 data={marketplace}
-                initialScrollIndex={2} 
                 renderItem={({item}) => (
                     <ImageMarketPlace {...item}/>
                 )}
+                initialScrollIndex={2} 
                 getItemLayout={(data, index) => (
                     { length: ITEM_WIDTH, offset: ITEM_WIDTH * index, index }
                 )}

@@ -1,13 +1,11 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleProp, StyleSheet, Text, TextProps, TextStyle } from "react-native";
 import { theme } from "../../theme/fonts";
+import React from "react";
 
-type props = {
-    children: React.ReactNode
-}
 
-const Subtitle = ({children}: props) => {
+const Subtitle = ({children, style}: TextProps) => {
     return ( 
-        <Text style={[styles.title]}>
+        <Text style={[styles.title, style]}>
             {children}
         </Text>
      );
@@ -18,7 +16,7 @@ const styles = StyleSheet.create({
     title: {
         color: theme.colors.white,
         fontSize: 18,
-        fontWeight: "bold",
+        fontWeight: "600"
     }
 })
 

@@ -2,7 +2,7 @@ import { Dimensions, FlatList, ImageProps, StyleSheet, View } from "react-native
 import Subtitle from "../../layout/Subtitle";
 import CardMarketPlace from "./CardMarktplace";
 
-interface card  {
+export type card = {
     likes: number;
     desc: string;
     url: ImageProps;
@@ -14,9 +14,12 @@ type props = {
 }
 
 const SubCarrossel = ({title, data}: props) => {
+
+    const ITEM_WIDTH = 100; 
+
     return ( 
-        <View>
-            <Subtitle>
+        <View  style={styles.container}>
+            <Subtitle style={{paddingHorizontal: 14}}>
                 {title}
             </Subtitle>
             <FlatList 
@@ -25,6 +28,10 @@ const SubCarrossel = ({title, data}: props) => {
                 data={data}
                 renderItem={({item}) => (
                     <CardMarketPlace {...item}/>
+                )}
+                initialScrollIndex={2} 
+                getItemLayout={(data, index) => (
+                    { length: ITEM_WIDTH, offset: ITEM_WIDTH * index, index }
                 )}
             />
         </View>
@@ -35,7 +42,7 @@ const SubCarrossel = ({title, data}: props) => {
 const styles = StyleSheet.create({
     container: {
         width: Dimensions.get("window").width,
-        alignItems: "center"
+        marginTop: 27,
     },
     containerList: {
         overflow: "scroll",
