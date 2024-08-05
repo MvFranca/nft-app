@@ -5,6 +5,7 @@ import { marketplace } from "../../../mocks/home";
 
 const Marketplace = () => {
     const ITEM_WIDTH = 100; 
+
     return ( 
         <View>
             <Title>

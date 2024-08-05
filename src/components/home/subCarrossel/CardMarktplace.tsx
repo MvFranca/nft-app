@@ -1,6 +1,7 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { card } from ".";
 import { theme } from "../../../theme/fonts";
+import Icon from "react-native-vector-icons/Foundation"
 
 const CardMarketPlace = ( 
   {  likes,
@@ -17,6 +18,7 @@ const CardMarketPlace = (
                 </Text>
 
                 <View style={styles.likes}>
+                    <Icon name="heart" color={"#FF3B30"} size={14}/>
                     <Text style={styles.likesText}>
                         {likes}
                     </Text>
@@ -56,10 +58,12 @@ const styles = StyleSheet.create({
     },
     likes: {
         flexDirection: "row",
+        gap: 3,
+        alignItems: "center"
 
     },
     likesText: {
-        color: "#A19CAF"
+        color: "#A19CAF",
     }
 })
 

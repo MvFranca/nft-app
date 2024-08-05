@@ -49,3 +49,34 @@ export const trendingCollections = [
     },
 ]
 
+export const topSeller = [
+    {
+        id: 1,
+        url: require("../../assets/topSeller/image1.png"),
+        desc: "3D Art",
+        likes: 200,
+    },
+    {
+        id: 2,
+        url: require("../../assets/topSeller/image2.png"),
+        desc: "Abstract Art",
+        likes: 200,
+    },
+    {
+        id: 3,
+        url: require("../../assets/topSeller/image3.png"),
+        desc: "Portrait Art",
+        likes: 200,
+
+    },
+    {
+        id: 4,
+        url: require("../../assets/topSeller/image3.png"),
+        desc: "Portrait Art",
+        likes: 200,
+
+    },
+  
+]
+
+
