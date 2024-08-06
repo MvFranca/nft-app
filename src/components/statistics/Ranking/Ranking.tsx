@@ -15,12 +15,16 @@ const Ranking = () => {
             blurAmount={20}
             reducedTransparencyFallbackColor="rgba(0, 0, 0, 0.5)"
           />
-          <FlatList 
-            data={ranking}
-            renderItem={({item}) =>(
-              <UserRanking {...item} />
-            )}
-          />
+          {
+            ranking &&
+
+            <FlatList 
+              data={ranking}
+              renderItem={({item}) =>(
+                <UserRanking {...item} />
+              )}
+            />
+          }
         </View>
      );
 }
