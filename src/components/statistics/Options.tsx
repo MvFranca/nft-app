@@ -32,8 +32,8 @@ const Options = ({option, setOption}:props) => {
             <TouchableOpacity style={[styles.option,[styles.option, optionSelected === "selected" ? styles.noSelected : styles.selected]]}
                 onPress={() => selectOption(false)}
             >
-                <Icon name="bar-graph" size={20} color={theme.colors.white} />
-                <Text style={styles.text}>
+                <Icon name="bar-graph" size={20} color={optionSelected === "selected" ? theme.colors.textOpacity : theme.colors.white} />
+                <Text style={[optionSelected === "selected" ? styles.textOpacity : styles.text]}>
                     Ranking
                 </Text>
             </TouchableOpacity>
@@ -41,8 +41,8 @@ const Options = ({option, setOption}:props) => {
             <TouchableOpacity style={[styles.option, styles[optionSelected]]}
                        onPress={() => selectOption(true)}
             >
-                <Icon2 name="query-stats" size={20} color={theme.colors.white} />
-                <Text style={styles.text}>
+                <Icon2 name="query-stats" size={20} color={optionSelected === "selected" ? theme.colors.white : theme.colors.textOpacity} />
+                <Text style={[optionSelected === "selected" ? styles.text : styles.textOpacity]}>
                    Activity
                 </Text>
             </TouchableOpacity>
@@ -87,6 +87,9 @@ export const styles = StyleSheet.create({
 
   text: {
     color: theme.colors.white
+  },
+  textOpacity: {
+    color: theme.colors.textOpacity
   }
 });
 

@@ -19,10 +19,10 @@ const Statistics = () => {
             <Options option={buttonOption} setOption={setButtonOption}/>
 
             <View style={styles.filters}>
-                <Filter>
+                <Filter icon="grid">
                      All categories
                 </Filter>
-                <Filter>
+                <Filter icon="link">
                     All Chains
                 </Filter>
             </View>
