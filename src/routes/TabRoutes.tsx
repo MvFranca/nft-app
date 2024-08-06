@@ -25,7 +25,7 @@ export type TabTypes = BottomTabNavigationProp<TabProps>;
 const TabRoutes = () => {
     return (
         <Tab.Navigator
-            initialRouteName="statistics"
+            initialRouteName="home"
             screenOptions={{
                 headerShown: false,
                 tabBarBackground: () => (

@@ -14,5 +14,10 @@ export const styles = StyleSheet.create({
         textAlign: "left",
         fontWeight: "bold",
         paddingHorizontal: 30
+    },
+    containerAnimated: {
+        maxHeight: 220,
+        paddingHorizontal: 20,
+        overflow: "hidden"
     }
 })
