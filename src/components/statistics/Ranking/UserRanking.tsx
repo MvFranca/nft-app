@@ -2,20 +2,27 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import { StyleSheet } from 'react-native';
 import { theme } from "../../../theme/fonts";
 
-const UserRanking = () => {
+type props = {
+  id: number;
+  name: string;
+  points: number;
+  percentage: number;
+}
+
+const UserRanking = ({id, name, points, percentage}: props) => {
     return ( 
         <View style={styles.container}>
             <View style={styles.dataUser}>
 
                 <Text style={styles.position}>
-                    1
+                    {id}
                 </Text>
 
                 <Image source={require("../../../assets/topSeller/image1.png")} style={{width: 40, height: 40, borderRadius: 9}}/>
 
                 <View>
 
-                    <Text style={styles.name}>Azumi</Text>
+                    <Text style={styles.name}>{name}</Text>
 
                     <TouchableOpacity>
                         <Text style={styles.viewInfo}>view info</Text>
@@ -27,10 +34,10 @@ const UserRanking = () => {
 
             <View>
                     <Text style={styles.points}>
-                        200055.02
+                        {points}
                     </Text>
                     <Text style={styles.percentage}>
-                        3,99%
+                        {percentage}%
                     </Text>
 
             </View>

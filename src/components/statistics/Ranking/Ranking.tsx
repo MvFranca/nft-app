@@ -1,8 +1,9 @@
-import { View } from "react-native";
+import { FlatList, View } from "react-native";
 import { StyleSheet } from 'react-native';
 import UserRanking from "./UserRanking";
 import { BlurView } from "@react-native-community/blur";
 import { Filter } from "react-native-svg";
+import { ranking } from "../../../mocks/statistics";
 
 const Ranking = () => {
     return ( 
@@ -14,9 +15,12 @@ const Ranking = () => {
             blurAmount={20}
             reducedTransparencyFallbackColor="rgba(0, 0, 0, 0.5)"
           />
-          <UserRanking />
-          <UserRanking />
-          <UserRanking />
+          <FlatList 
+            data={ranking}
+            renderItem={({item}) =>(
+              <UserRanking {...item} />
+            )}
+          />
         </View>
      );
 }
