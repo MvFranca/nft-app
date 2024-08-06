@@ -8,6 +8,7 @@ import { BlurView } from "@react-native-community/blur";
 
 import Icon from "react-native-vector-icons/FontAwesome";
 import Icon2 from "react-native-vector-icons/Entypo";
+import Icon3 from "react-native-vector-icons/MaterialIcons";
 import { theme } from "../theme/fonts";
 import { PortalProvider } from "react-native-portal";
 
@@ -73,11 +74,11 @@ const TabRoutes = () => {
                 }}
             />
             <Tab.Screen
-                name="explore"
+                name="chat"
                 component={Explore}
                 options={{
                     tabBarIcon: ({ size }) => (
-                        <Icon name="search" size={size} color={theme.colors.white} />
+                        <Icon3 name="chat" size={size} color={theme.colors.white} />
                     ),
                 }}
             />
