@@ -32,6 +32,7 @@ export const styles = StyleSheet.create({
     gap: 2,
     borderRadius: 10,
     padding: 10,
+    marginTop: 20,
 
     backgroundColor: theme.colors.borderColor
   },

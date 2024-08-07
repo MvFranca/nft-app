@@ -2,11 +2,27 @@ import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { StyleSheet } from 'react-native';
 import { theme } from "../../theme/fonts";
 import Icon from "react-native-vector-icons/FontAwesome"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { userData } from "../../types/user";
+import { getUserData } from "../../services/login";
 
 const InputMessage = () => {
 
     const [message, setMessage] = useState('')
+
+
+
+    const [user, setUser] = useState<userData>({} as userData)
+
+    async function userData(){
+        const user = await getUserData()
+        setUser(user)
+    }
+
+    useEffect(() => {
+        userData()
+    }, [])
+
 
     function sendMessage(){
 

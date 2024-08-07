@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.backgroundPrincipal,
     padding: 20,
-    gap: 20
+  },
+  messages: {
   }
 });
