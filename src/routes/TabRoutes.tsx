@@ -1,7 +1,6 @@
 import { createBottomTabNavigator, BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import Home from "../screens/home";
 import Statistics from "../screens/statistics";
-import Explore from "../screens/explore";
 import Profile from "../screens/profile";
 import { Image, StyleSheet } from "react-native";
 import { BlurView } from "@react-native-community/blur";
@@ -11,6 +10,7 @@ import Icon2 from "react-native-vector-icons/Entypo";
 import Icon3 from "react-native-vector-icons/MaterialIcons";
 import { theme } from "../theme/fonts";
 import { PortalProvider } from "react-native-portal";
+import Chat from "../screens/chat";
 
 const Tab = createBottomTabNavigator();
 
@@ -75,7 +75,7 @@ const TabRoutes = () => {
             />
             <Tab.Screen
                 name="chat"
-                component={Explore}
+                component={Chat}
                 options={{
                     tabBarIcon: ({ size }) => (
                         <Icon3 name="chat" size={size} color={theme.colors.white} />

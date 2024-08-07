@@ -6,5 +6,7 @@ export const colors = {
     textOpacity: "#ffffff63",
     white: "#FFF",
     black: "#000",
-    gray: "#EBEBF599"
+    gray: "#EBEBF599",
+
+    colorUserMessage:' #202134'
 }
