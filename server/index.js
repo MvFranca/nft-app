@@ -10,24 +10,51 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-// Create HTTP server and Socket.IO server
 const httpServer = http.createServer(app);
-const io = new SocketIOServer(httpServer, {
+const socket = new SocketIOServer(httpServer, {
     cors: {
-        origin: "http://192.168.9.106:3000" // Use o IP da máquina
+        origin: "http://192.168.9.106:3000" 
     }
 });
 
-// Socket.IO connection handler
-io.on('connection', (socket) => {
+// Store chat rooms
+let chatRooms = [];
+
+const generateID = () => Math.random().toString(36).substring(2, 10);
+
+socket.on('connection', (socket) => {
     console.log(`⚡: ${socket.id} user just connected!`);
 
     socket.on("createRoom", (roomName) => {
+        console.log("Room created:", roomName);
         socket.join(roomName);
-        //👇🏻 Adds the new group name to the chat rooms array
-        chatRooms.unshift({ id: generateID(), roomName, messages: [] });
-        //👇🏻 Returns the updated chat rooms via another event
+        chatRooms.unshift({ id: generateID(), name: roomName, messages: [] });
         socket.emit("roomsList", chatRooms);
+    });
+
+    socket.on("findRoom", (id) => {
+        let result = chatRooms.filter((room) => room.id === id);
+        socket.emit("foundRoom", result[0]?.messages || []);
+    });
+
+    socket.on("newMessage", (data) => {
+        const { room_id, message, user, timestamp } = data;
+        console.log(user)
+        console.log('user')
+        let result = chatRooms.filter((room) => room.id === room_id);
+        if (result.length > 0) {
+            const newMessage = {
+                id: generateID(),
+                text: message,
+                user,
+                time: `${timestamp.hour}:${timestamp.mins}`,
+            };
+
+            result[0].messages.push(newMessage);
+            socket.to(result[0].name).emit("roomMessage", newMessage);
+            socket.emit("roomsList", chatRooms);
+            socket.emit("foundRoom", result[0].messages);
+        }
     });
 
     socket.on('disconnect', () => {
@@ -35,39 +62,10 @@ io.on('connection', (socket) => {
     });
 });
 
-// API route
 app.get("/api", (req, res) => {
-    res.json({
-        message: "Hello world",
-    });
+    res.json(chatRooms);
 });
 
-// Start the server
 httpServer.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
-
-//👇🏻 Generates random string as the ID
-const generateID = () => Math.random().toString(36).substring(2, 10);
-
-let chatRooms = [
-    //👇🏻 Here is the data structure of each chatroom
-    // {
-    //  id: generateID(),
-    //  name: "Novu Hangouts",
-    //  messages: [
-    //      {
-    //          id: generateID(),
-    //          text: "Hello guys, welcome!",
-    //          time: "07:50",
-    //          user: "Tomer",
-    //      },
-    //      {
-    //          id: generateID(),
-    //          text: "Hi Tomer, thank you! 😇",
-    //          time: "08:50",
-    //          user: "David",
-    //      },
-    //  ],
-    // },
-];

@@ -31,7 +31,6 @@ const ChatComponent = ({item}: props) => {
     };
 
 
-
     return ( 
         <TouchableOpacity style={styles.container}
             onPress={handleNavigation}
@@ -40,7 +39,7 @@ const ChatComponent = ({item}: props) => {
                 {item.name}
             </Text>
             <Text style={styles.message}>
-                {messages?.text ? messages.text : "Tap to start chatting"}
+                {messages?.text ? messages.text : "Send the first message..."}
             </Text>
         </TouchableOpacity>
      );

@@ -8,7 +8,6 @@ import SubCarrossel from "../../components/home/subCarrossel";
 
 const Home = () => {
 
-    console.log(trendingCollections)
 
     return ( 
         <ScrollView style={style.container}>

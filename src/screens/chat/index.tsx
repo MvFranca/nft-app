@@ -16,6 +16,7 @@ const Chat = () => {
 
     const [visible, setVisible] = useState(false);
     const [rooms, setRooms] = useState([]);
+    const [loading, setLoading] = useState(true)
 
 
     async function fetchGroups(){
@@ -23,6 +24,7 @@ const Chat = () => {
         .then((res) => res.json())
         .then((data) => setRooms(data))
         .catch((err) => console.error(err));
+
     }
 
     useEffect(() => {
@@ -32,10 +34,18 @@ const Chat = () => {
     //👇🏻 Runs whenever there is new trigger from the backend
     useEffect(() => {
         socket.on("roomsList", (rooms) => {
+     
             setRooms(rooms);
         });
     }, [socket]);
 
+
+    useEffect(() => {
+        if(rooms.length > 0){
+            setLoading(false)
+        }
+
+    },[rooms])
 
     return ( 
     <View style={styles.container}>
@@ -44,7 +54,7 @@ const Chat = () => {
             setVisible= {setVisible}
         />
         {
-            rooms.length > 0 &&
+            !loading &&
             <FlatList 
                 data={rooms}
                 // keyExtractor={(item) => item.id}

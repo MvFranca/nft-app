@@ -24,10 +24,6 @@ const Profile = () => {
         userData()
     }, [])
 
-    useEffect(() => {
-        console.log(user)
-    }, [user])
-
     return ( 
         <View style={styles.container}>
             <View>

@@ -6,10 +6,13 @@ import { useEffect, useState } from "react";
 import { userData } from "../../types/user";
 import { getUserData } from "../../services/login";
 
-const InputMessage = () => {
+type props = {
+  sendMessage: () => void;
+  message: string;
+  setMessage: (value: string) => void;
+}
 
-    const [message, setMessage] = useState('')
-
+const InputMessage = ({sendMessage, message, setMessage}: props) => {
 
 
     const [user, setUser] = useState<userData>({} as userData)
@@ -23,10 +26,6 @@ const InputMessage = () => {
         userData()
     }, [])
 
-
-    function sendMessage(){
-
-    }
 
     return ( 
         <View style={styles.container}>

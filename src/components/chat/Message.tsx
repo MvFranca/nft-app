@@ -13,13 +13,14 @@ const Message = ({item, user}: props) => {
 
     const status = item.name !== user;
 
+
     return ( 
         <View style={ status
           ? styles.container : [styles.container, {
             alignSelf: "flex-end"
           }]}>
             <Text style={styles.user}>
-                {item.name}
+                {item.user}
             </Text>
             <Text style={styles.message}>
                {item.text}
