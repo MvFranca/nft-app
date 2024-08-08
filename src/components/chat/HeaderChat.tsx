@@ -11,7 +11,7 @@ const HeaderChat = ({ setVisible }: props) => {
         <TouchableOpacity activeOpacity={0.5} onPress={() => {
             setVisible(true)
         }} style={styles.container}>
-            <Text style={styles.button}>CRIAR NOVO CHAT</Text>
+            <Text style={styles.button}>CREATE NEW CHAT</Text>
         </TouchableOpacity>
      );
 }
