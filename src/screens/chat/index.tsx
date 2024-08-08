@@ -19,7 +19,7 @@ const Chat = () => {
 
 
     async function fetchGroups(){
-        fetch("http://localhost:4000/api")
+        fetch("http://192.168.9.106:4000/api/")
         .then((res) => res.json())
         .then((data) => setRooms(data))
         .catch((err) => console.error(err));

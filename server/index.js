@@ -14,13 +14,21 @@ app.use(cors());
 const httpServer = http.createServer(app);
 const io = new SocketIOServer(httpServer, {
     cors: {
-        origin: "http://localhost:3000"
+        origin: "http://192.168.9.106:3000" // Use o IP da máquina
     }
 });
 
 // Socket.IO connection handler
 io.on('connection', (socket) => {
     console.log(`⚡: ${socket.id} user just connected!`);
+
+    socket.on("createRoom", (roomName) => {
+        socket.join(roomName);
+        //👇🏻 Adds the new group name to the chat rooms array
+        chatRooms.unshift({ id: generateID(), roomName, messages: [] });
+        //👇🏻 Returns the updated chat rooms via another event
+        socket.emit("roomsList", chatRooms);
+    });
 
     socket.on('disconnect', () => {
         console.log('🔥: A user disconnected');
@@ -63,20 +71,3 @@ let chatRooms = [
     //  ],
     // },
 ];
-
-io.on("connection", (socket) => {
-    console.log(`⚡: ${socket.id} user just connected!`);
-
-    socket.on("createRoom", (roomName) => {
-        socket.join(roomName);
-        //👇🏻 Adds the new group name to the chat rooms array
-        chatRooms.unshift({ id: generateID(), roomName, messages: [] });
-        //👇🏻 Returns the updated chat rooms via another event
-        socket.emit("roomsList", chatRooms);
-    });
-
-    socket.on("disconnect", () => {
-        socket.disconnect();
-        console.log("🔥: A user disconnected");
-    });
-});
