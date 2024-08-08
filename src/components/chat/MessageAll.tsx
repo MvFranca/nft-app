@@ -1,18 +1,16 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { StackTypes } from '../../routes/StackRoutes';
 import InputMessage from './InputMessage';
 import Message from './Message';
 import { theme } from '../../theme/fonts';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getUserData } from '../../services/login';
 import socket from '../../utils/socket';
 
 type Props = {
     navigation?: StackTypes;
 };
-
 
 type Params = {
     id: string;  
@@ -21,75 +19,70 @@ type Params = {
 
 const MessageAll = ({  }: Props) => {
 
-    const route = useRoute()
-
+    const route = useRoute();
     const { id, name } = route.params as Params;
-    const navigation = useNavigation()
-    const [user, setUser] = useState("");
-    const [message, setMessage] = useState('')
+    const navigation = useNavigation();
 
-    const getUsername = async () => {
-        try {
-            const user = await getUserData()
-            setUser(user.name);
-        } catch (e) {
-            console.error("Error while loading username!");
-        }
-    };
+    const [user, setUser] = useState("");
+    const [message, setMessage] = useState('');
+    const [chatMessages, setChatMessages] = useState([]);
 
     useEffect(() => {
         navigation.setOptions({ title: name });
 
-        getUsername()
+        const getUsername = async () => {
+            try {
+                const user = await getUserData();
+                setUser(user.name);
+            } catch (e) {
+                console.error("Error while loading username!");
+            }
+        };
+
+        getUsername();
 
         socket.emit("findRoom", id);
-    },[id])
 
+        socket.on("foundRoom", (roomChats) => {
+            setChatMessages(roomChats);
+        });
 
-    useLayoutEffect(() => {
-        navigation?.setOptions({ title: name });
-        socket.emit("findRoom", id);
-        socket.on("foundRoom", (roomChats) => setChatMessages(roomChats));
-    }, []);
+        socket.on("roomMessage", (newMessage) => {
+            setChatMessages((prevMessages) => [...prevMessages, newMessage]);
+        });
 
-    useEffect(() => {
-        console.log("oi")
-        socket.on("foundRoom", (roomChats) => setChatMessages(roomChats));
-    }, [socket])
-
-    const [chatMessages, setChatMessages] = useState([])
-
-    console.log(chatMessages)
-
+        return () => {
+            socket.off("foundRoom");
+            socket.off("roomMessage");
+        };
+    }, [id, name, navigation]);
 
     const handleNewMessage = () => {
+        const hour = new Date().getHours().toString().padStart(2, '0');
+        const mins = new Date().getMinutes().toString().padStart(2, '0');
 
-
-        const hour =
-            new Date().getHours() < 10
-                ? `0${new Date().getHours()}`
-                : `${new Date().getHours()}`;
-    
-        const mins =
-            new Date().getMinutes() < 10
-                ? `0${new Date().getMinutes()}`
-                : `${new Date().getMinutes()}`;
-    
         socket.emit("newMessage", {
             message,
             room_id: id,
             user: user,
             timestamp: { hour, mins },
         });
+
+        setMessage(''); 
     };
 
     return (
         <View style={styles.container}>
             <FlatList
                 data={chatMessages}
+                keyExtractor={(item) => item.id}
                 renderItem={({ item }) => <Message user={user} item={item} />}
             />
-            <InputMessage sendMessage={handleNewMessage} message={message} setMessage={setMessage}/>
+            <InputMessage 
+                sendMessage={handleNewMessage} 
+                message={message} 
+                setMessage={setMessage} 
+            />
         </View>
     );
 };

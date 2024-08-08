@@ -13,7 +13,7 @@ app.use(cors());
 const httpServer = http.createServer(app);
 const socket = new SocketIOServer(httpServer, {
     cors: {
-        origin: "http://192.168.9.106:3000" 
+        origin: `http://192.168.9.106:3000` 
     }
 });
 
@@ -39,21 +39,23 @@ socket.on('connection', (socket) => {
 
     socket.on("newMessage", (data) => {
         const { room_id, message, user, timestamp } = data;
-        console.log(user)
-        console.log('user')
-        let result = chatRooms.filter((room) => room.id === room_id);
-        if (result.length > 0) {
+    
+        let result = chatRooms.find((room) => room.id === room_id);
+        if (result) {
             const newMessage = {
                 id: generateID(),
                 text: message,
                 user,
                 time: `${timestamp.hour}:${timestamp.mins}`,
             };
-
-            result[0].messages.push(newMessage);
-            socket.to(result[0].name).emit("roomMessage", newMessage);
+    
+            result.messages.push(newMessage);
+    
+            socket.to(result.name).emit("roomMessage", newMessage);
+            socket.emit("roomMessage", newMessage);  
+    
             socket.emit("roomsList", chatRooms);
-            socket.emit("foundRoom", result[0].messages);
+            socket.emit("foundRoom", result.messages);
         }
     });
 

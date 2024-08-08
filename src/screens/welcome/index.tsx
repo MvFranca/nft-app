@@ -14,7 +14,7 @@ function Welcome(){
     async function userData(){
        const user = await getUserData()
 
-       if(user) navigation.navigate("tabroutes")
+    //    if(user) navigation.navigate("tabroutes")
     }
 
     useEffect(() => {
