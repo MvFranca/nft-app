@@ -122,7 +122,7 @@ export const styles = StyleSheet.create({
         borderTopWidth: 1,
         elevation: 1,
         height: 350,
-        backgroundColor: theme.colors.gray,
+        backgroundColor: theme.colors.background2,
         position: "absolute",
         bottom: 0,
         zIndex: 10,
@@ -130,14 +130,18 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     modalinput: {
-        borderWidth: 2,
+        borderWidth: 1.5,
+        color: theme.colors.white,
+        borderColor: theme.colors.borderColor,
         padding: 15,
+        borderRadius: 15
     },
     modalsubheading: {
         fontSize: 20,
         fontWeight: "bold",
         marginBottom: 15,
         textAlign: "center",
+        color: theme.colors.white
     },
     mmessageWrapper: {
         width: "100%",

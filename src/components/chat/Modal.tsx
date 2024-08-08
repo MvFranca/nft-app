@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { styles } from "../../utils/styles";
 // import { StyleSheet } from 'react-native';
 import socket from "../../utils/socket";
+import { theme } from "../../theme/fonts";
 type props = {
     setVisible: (x: boolean) => void;
 }
@@ -23,6 +24,7 @@ const ModalChat = ({ setVisible }: props) => {
             <TextInput
                 style={styles.modalinput}
                 placeholder='Group name'
+                placeholderTextColor={theme.colors.white}
                 onChangeText={(value) => setGroupName(value)}
             />
 
