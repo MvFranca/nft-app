@@ -1,20 +1,28 @@
 import { Text, View } from "react-native";
 import { StyleSheet } from 'react-native';
 import { theme } from "../../theme/fonts";
+import { messageType } from "../../types/messages";
+
 
 type props = {
-    user: string;
-    message: string;
+    item: messageType;
+    user: string
 }
 
-const Message = ({user, message}: props) => {
+const Message = ({item, user}: props) => {
+
+    const status = item.name !== user;
+
     return ( 
-        <View style={styles.container}>
+        <View style={ status
+          ? styles.container : [styles.container, {
+            alignSelf: "flex-end"
+          }]}>
             <Text style={styles.user}>
-                {user}
+                {item.name}
             </Text>
             <Text style={styles.message}>
-               {message}
+               {item.text}
             </Text>
         </View>
      );

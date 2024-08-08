@@ -6,7 +6,6 @@ const { Server: SocketIOServer } = require('socket.io');
 const app = express();
 const PORT = 4000;
 
-// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
@@ -38,4 +37,46 @@ app.get("/api", (req, res) => {
 // Start the server
 httpServer.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
+});
+
+//👇🏻 Generates random string as the ID
+const generateID = () => Math.random().toString(36).substring(2, 10);
+
+let chatRooms = [
+    //👇🏻 Here is the data structure of each chatroom
+    // {
+    //  id: generateID(),
+    //  name: "Novu Hangouts",
+    //  messages: [
+    //      {
+    //          id: generateID(),
+    //          text: "Hello guys, welcome!",
+    //          time: "07:50",
+    //          user: "Tomer",
+    //      },
+    //      {
+    //          id: generateID(),
+    //          text: "Hi Tomer, thank you! 😇",
+    //          time: "08:50",
+    //          user: "David",
+    //      },
+    //  ],
+    // },
+];
+
+io.on("connection", (socket) => {
+    console.log(`⚡: ${socket.id} user just connected!`);
+
+    socket.on("createRoom", (roomName) => {
+        socket.join(roomName);
+        //👇🏻 Adds the new group name to the chat rooms array
+        chatRooms.unshift({ id: generateID(), roomName, messages: [] });
+        //👇🏻 Returns the updated chat rooms via another event
+        socket.emit("roomsList", chatRooms);
+    });
+
+    socket.on("disconnect", () => {
+        socket.disconnect();
+        console.log("🔥: A user disconnected");
+    });
 });

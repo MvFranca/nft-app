@@ -1,4 +1,5 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+import { theme } from "../theme/fonts";
 
 export const styles = StyleSheet.create({
     loginscreen: {
@@ -38,7 +39,7 @@ export const styles = StyleSheet.create({
         fontWeight: "600",
     },
     chatscreen: {
-        backgroundColor: "#F7F7F7",
+        backgroundColor: theme.colors.gray,
         flex: 1,
         padding: 10,
         position: "relative",
@@ -116,12 +117,12 @@ export const styles = StyleSheet.create({
         color: "#fff",
     },
     modalContainer: {
-        width: "100%",
+        width: Dimensions.get("window").width,
         borderTopColor: "#ddd",
         borderTopWidth: 1,
         elevation: 1,
-        height: 400,
-        backgroundColor: "#fff",
+        height: 350,
+        backgroundColor: theme.colors.gray,
         position: "absolute",
         bottom: 0,
         zIndex: 10,

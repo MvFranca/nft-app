@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
     height: "auto",
 
     position: "absolute",
-    bottom: 110,
+    bottom: 30,
     right: 20,
 
     borderWidth: 1.5,

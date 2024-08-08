@@ -6,48 +6,54 @@ import InputMessage from "../../components/chat/InputMessage";
 import { useEffect, useState } from "react";
 import { userData } from "../../types/user";
 import { getUserData } from "../../services/login";
+import ChatComponent from "../../components/chat/ChatComponent";
+import HeaderChat from "../../components/chat/HeaderChat";
+import ModalChat from "../../components/chat/Modal";
+
+import socket from "../../utils/socket";
 
 const Chat = () => {
 
-    // const [user, setUser] = useState<userData>({} as userData)
+    const [visible, setVisible] = useState(false);
+    const [rooms, setRooms] = useState([]);
 
-    // async function userData(){
-    //     const user = await getUserData()
-    //     setUser(user)
-    // }
 
-    // useEffect(() => {
-    //     userData()
-    // }, [])
+    async function fetchGroups(){
+        fetch("http://localhost:4000/api")
+        .then((res) => res.json())
+        .then((data) => setRooms(data))
+        .catch((err) => console.error(err));
+    }
 
-    const [chatMessages, setChatMessages] = useState([
-        {
-            id: "1",
-            text: "Hello guys, welcome!",
-            time: "07:50",
-            user: "Marcos",
-        },
-        {
-            id: "2",
-            text: "Hi Tomer, thank you! 😇",
-            time: "08:50",
-            user: "Daniel",
-        },
-    ]);
+    useEffect(() => {
+        fetchGroups();
+    }, []);
+    
+    //👇🏻 Runs whenever there is new trigger from the backend
+    useEffect(() => {
+        socket.on("roomsList", (rooms) => {
+            setRooms(rooms);
+        });
+    }, [socket]);
 
 
     return ( 
     <View style={styles.container}>
 
-        <FlatList 
-            style={ styles.messages}
-            data={chatMessages}
-            renderItem={({item}) => (
-                <Message user={item.user} message={item.text}/>
-            )}
+        <HeaderChat
+            setVisible= {setVisible}
         />
-
-        <InputMessage />
+        {
+            rooms.length > 0 &&
+            <FlatList 
+                data={rooms}
+                // keyExtractor={(item) => item.id}
+                renderItem={({item}) => (
+                    <ChatComponent item={item}/>
+                )}
+            />
+        }
+         {visible && <ModalChat setVisible={setVisible} />}
     </View> 
     );
 }
