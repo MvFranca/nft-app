@@ -26,36 +26,48 @@ const MessageAll = ({  }: Props) => {
     const [user, setUser] = useState("");
     const [message, setMessage] = useState('');
     const [chatMessages, setChatMessages] = useState([]);
+useEffect(() => {
+    navigation.setOptions({ title: name });
 
-    useEffect(() => {
-        navigation.setOptions({ title: name });
+    const getUsername = async () => {
+        try {
+            const user = await getUserData();
+            setUser(user.name);
+        } catch (e) {
+            console.error("Error while loading username!");
+        }
+    };
 
-        const getUsername = async () => {
-            try {
-                const user = await getUserData();
-                setUser(user.name);
-            } catch (e) {
-                console.error("Error while loading username!");
-            }
-        };
+    getUsername();
 
-        getUsername();
+    // Emitir evento para buscar mensagens do grupo
+    socket.emit("findRoom", id);
 
-        socket.emit("findRoom", id);
+    // Atualizar mensagens do grupo ao receber o evento "foundRoom"
+    const handleFoundRoom = (roomChats) => {
+        console.log("Mensagens recebidas do grupo:", roomChats);
+        setChatMessages(roomChats); // Atualiza o estado com as mensagens recebidas
+    };
 
-        socket.on("foundRoom", (roomChats) => {
-            setChatMessages(roomChats);
-        });
+    socket.on("foundRoom", handleFoundRoom);
 
-        socket.on("roomMessage", (newMessage) => {
-            setChatMessages((prevMessages) => [...prevMessages, newMessage]);
-        });
+    // Atualizar mensagens ao receber novas via "roomMessage"
+    const handleNewMessage = (newMessage) => {
+        console.log("Nova mensagem recebida:", newMessage);
+        setChatMessages((prevMessages) => [...prevMessages, newMessage]);
+    };
 
-        return () => {
-            socket.off("foundRoom");
-            socket.off("roomMessage");
-        };
-    }, [id, name, navigation]);
+    socket.on("roomMessage", handleNewMessage);
+
+    // Limpar listeners ao desmontar o componente
+    return () => {
+        socket.off("foundRoom", handleFoundRoom);
+        socket.off("roomMessage", handleNewMessage);
+    };
+}, [id, name, navigation]);
+
+    
+    
 
     const handleNewMessage = () => {
         const hour = new Date().getHours().toString().padStart(2, '0');

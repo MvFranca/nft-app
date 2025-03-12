@@ -20,8 +20,8 @@ const ChatComponent = ({item}: props) => {
     const [messages, setMessages] = useState<messageType>();
 
     useEffect(() => {
-        setMessages(item.messages[item.messages.length - 1]);
-    }, []);
+        setMessages(item.messages[item.messages.length - 1]); 
+    }, [item.messages]);
 
     const handleNavigation = () => {
         navigation.navigate("chatMessage", {
