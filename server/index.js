@@ -4,7 +4,7 @@ const http = require("http");
 const { Server: SocketIOServer } = require("socket.io");
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000; 
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -13,7 +13,7 @@ app.use(cors());
 const httpServer = http.createServer(app);
 const socket = new SocketIOServer(httpServer, {
     cors: {
-        origin: "*", // Permitir conexões de qualquer origem
+        origin: "*",
         methods: ["GET", "POST"],
     },
 });

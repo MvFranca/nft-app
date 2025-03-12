@@ -1,7 +1,11 @@
 import io from "socket.io-client";
 
-// Use o IP e porta corretos. Para o emulador Android, use 10.0.2.2.
-const socket = io("http://10.0.2.2:4000"); // Se estiver no emulador Android
+const SERVER_URL =
+    process.env.NODE_ENV === "production"
+        ? "https://seu-render-app.onrender.com"
+        : "http://10.0.2.2:4000"; 
+
+const socket = io(SERVER_URL);
 
 socket.on("connect", () => {
     console.log("Socket conectado com sucesso. ID:", socket.id);

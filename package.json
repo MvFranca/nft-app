@@ -8,8 +8,8 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "startServer": "node server.js",
-    "dev": "nodemon server.js"
+    "startServer": "node server/index.js",
+    "dev": "nodemon server/index.js"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.24.0",
